@@ -33,3 +33,34 @@ services:
     environment:
       QDRANT__CLUSTER__ENABLED: "true"
     command: "./qdrant --bootstrap http://qdrant_node1:6335 --uri http://qdrant_node3:6335"
+
+  prometheus:
+    image: prom/prometheus:v2.35.0
+    container_name: prometheus
+    depends_on:
+      - qdrant_node1
+      - qdrant_node2
+      - qdrant_node3
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    ports:
+      - "9090:9090"
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
+    ports:
+      - "3000:3000"
+    environment:
+      GF_SECURITY_ADMIN_USER: 'admin'
+      GF_SECURITY_ADMIN_PASSWORD: 'admin'
+      GF_USERS_ALLOW_SIGN_UP: 'true'
+    volumes:
+      - grafana-data:/var/lib/grafana
+    depends_on:
+      - prometheus
+
+volumes:
+  grafana-data: {}

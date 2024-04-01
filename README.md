@@ -62,8 +62,41 @@ To interact with the distributed Qdrant database, run the `main.py` script:
 ```bash
 python main.py
 ```
-
 This demonstrates essential database operations, tailored to a distributed setup, including data sharding and replication strategies.
+
+## Monitoring and Visualization with Prometheus and Grafana
+
+This project also integrates Prometheus for monitoring and Grafana for visualization, enhancing the observability of the distributed Qdrant deployment directly within the Docker Compose environment.
+
+### Prometheus Configuration
+
+Prometheus is configured to automatically scrape metrics from the Qdrant nodes. This is achieved by mounting a custom `prometheus.yml` configuration file into the Prometheus container, specifying the targets and metrics to collect.
+
+To add Prometheus to your deployment:
+
+1. Prometheus is included as a service in the `docker-compose.yml` file. Ensure the `prometheus.yml` file is correctly configured to scrape metrics from your Qdrant nodes.
+2. Launch Prometheus along with your services using Docker Compose:
+   ```bash
+   docker-compose up -d prometheus
+   ```
+3. Access Prometheus UI by navigating to `http://localhost:9090`.
+
+### Grafana Dashboard
+
+Grafana is set up to visualize the metrics collected by Prometheus. A volume is created for Grafana data persistence, and initial login credentials are configured through environment variables.
+
+To use the Grafana dashboard:
+
+1. Grafana is included as a service in the `docker-compose.yml` file and depends on Prometheus being up and running.
+2. Start Grafana along with your services:
+   ```bash
+   docker-compose up -d grafana
+   ```
+3. Access the Grafana UI by navigating to `http://localhost:3000`. Login with the default credentials (admin/admin) or as specified in the `docker-compose.yml`.
+4. Connect Grafana to the Prometheus data source by specifying Prometheus's URL (`http://prometheus:9090`) in the data source settings.
+5. Import the `grafana.json` dashboard file to visualize the Qdrant metrics.
+
+This setup enables you to monitor the health and performance of your Qdrant deployment seamlessly, utilizing Docker Compose for an integrated monitoring and visualization solution.
 
 ## License
 
