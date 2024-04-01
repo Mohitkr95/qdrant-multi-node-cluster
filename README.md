@@ -36,8 +36,8 @@ The deployment of Qdrant nodes is managed through a `docker-compose.yml` file, w
 Clone the repository and install the necessary dependencies:
 
 ```bash
-git clone <repository-url>
-cd <repository-directory>
+git clone https://github.com/Mohitkr95/qdrant-multi-node-cluster.git
+cd qdrant-multi-node-cluster
 pip install -r requirements.txt
 ```
 
