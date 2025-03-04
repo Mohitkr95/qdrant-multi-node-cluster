@@ -3,7 +3,7 @@
 This project is a demonstration of deploying Qdrant, a high-performance vector database, in a distributed manner. By leveraging Docker Compose, we set up a scalable architecture that consists of multiple Qdrant nodes, ensuring high availability and efficient load distribution for vector search operations.
 
 <p align="center">
-  <img src="https://qdrant.tech/images/logo_with_text.svg">
+  <img src="https://dbdb.io/media/logos/qdrant.svg">
 </p>
 
 ## Key Features
