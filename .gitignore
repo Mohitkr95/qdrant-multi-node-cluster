@@ -161,3 +161,24 @@ cython_debug/
 
 data/
 data
+
+# Python virtual environments
+venv/
+env/
+.env/
+
+# Python package artifacts
+*.egg-info/
+dist/
+build/
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Data directory for Qdrant
+data/
+
+# IDE files
+.vscode/
+.idea/
+push.sh

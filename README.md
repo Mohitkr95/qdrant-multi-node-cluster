@@ -33,6 +33,38 @@ The deployment of Qdrant nodes is managed through a `docker-compose.yml` file, w
 - **Replication:** To ensure data availability and fault tolerance, replication can be configured across the nodes. This project sets the groundwork for such configurations, highlighting how Qdrant supports distributed data management.
 - **Resource Allocation:** Each node's resources (CPU and memory limits) can be customized in the `docker-compose.yml` file, allowing for tailored deployment based on the available infrastructure.
 
+## Project Structure
+
+The project is organized as follows:
+
+```
+qdrant-multi-node-cluster/
+├── config/                    # Configuration files
+│   ├── grafana.json           # Grafana dashboard configuration
+│   └── prometheus.yml         # Prometheus configuration
+├── deployments/               # Deployment files
+│   └── docker/                # Docker-related files
+│       └── docker-compose.yml # Docker Compose configuration
+├── src/                       # Source code
+│   ├── qdrant_demo/           # Main package
+│   │   ├── config/            # Configuration settings
+│   │   │   ├── __init__.py
+│   │   │   └── settings.py    # Configuration parameters
+│   │   ├── core/              # Core functionality
+│   │   │   ├── __init__.py
+│   │   │   └── cluster_demo.py # Main demo class
+│   │   ├── utils/             # Utility functions
+│   │   │   ├── __init__.py
+│   │   │   └── data_generator.py # Data generation utilities
+│   │   └── __init__.py
+│   └── run_demo.py            # Main entry point
+├── tests/                     # Test files
+├── LICENSE
+├── README.md
+├── requirements.txt
+└── setup.py                   # Package setup file
+```
+
 ## Setup Instructions
 
 ### 1. Preparing the Deployment
@@ -42,7 +74,7 @@ Clone the repository and install the necessary dependencies:
 ```bash
 git clone https://github.com/Mohitkr95/qdrant-multi-node-cluster.git
 cd qdrant-multi-node-cluster
-pip install -r requirements.txt
+pip install -e .
 ```
 
 ### 2. Launching the Qdrant Nodes
@@ -50,6 +82,7 @@ pip install -r requirements.txt
 Initiate the deployment of the Qdrant nodes using Docker Compose:
 
 ```bash
+cd deployments/docker
 docker-compose up -d
 ```
 
@@ -57,12 +90,15 @@ This command spins up the configured number of Qdrant nodes, setting up a distri
 
 ## Running the Client Application
 
-To interact with the distributed Qdrant database, run the `main.py` script:
+To interact with the distributed Qdrant database, run the demo script:
 
 ```bash
-python main.py
+# Run with default settings
+python src/run_demo.py
+
+# Run with custom settings
+python src/run_demo.py --host localhost --port 6333 --points 2000
 ```
-This demonstrates essential database operations, tailored to a distributed setup, including data sharding and replication strategies.
 
 ## Monitoring and Visualization with Prometheus and Grafana
 
