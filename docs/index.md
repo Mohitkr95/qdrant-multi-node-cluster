@@ -5,7 +5,7 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/Mohitkr95/qdrant-multi-node-cluster/actions"><img src="https://github.com/Mohitkr95/qdrant-multi-node-cluster/workflows/Build/badge.svg" alt="Build Status"></a>
+  <a href="https://github.com/Mohitkr95/qdrant-multi-node-cluster/actions/workflows/build.yml"><img src="https://img.shields.io/github/actions/workflow/status/Mohitkr95/qdrant-multi-node-cluster/build.yml?branch=main&label=build%20%26%20docs" alt="Build & Docs Status"></a>
   <a href="https://github.com/Mohitkr95/qdrant-multi-node-cluster/blob/main/LICENSE"><img src="https://img.shields.io/github/license/Mohitkr95/qdrant-multi-node-cluster" alt="License"></a>
   <a href="https://github.com/Mohitkr95/qdrant-multi-node-cluster/releases"><img src="https://img.shields.io/github/v/release/Mohitkr95/qdrant-multi-node-cluster" alt="Version"></a>
   <a href="https://github.com/Mohitkr95/qdrant-multi-node-cluster/issues"><img src="https://img.shields.io/github/issues/Mohitkr95/qdrant-multi-node-cluster" alt="Issues"></a>
