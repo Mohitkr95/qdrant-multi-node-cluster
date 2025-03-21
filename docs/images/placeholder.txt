@@ -1,0 +1,7 @@
+This directory contains images for the documentation.
+
+You should add the following images:
+1. grafana-dashboard.png - A screenshot of the Grafana dashboard showing Qdrant metrics
+2. architecture-diagram.png - A diagram showing the architecture of the Qdrant multi-node cluster
+
+These images are referenced in the documentation and will enhance the user's understanding of the project. 

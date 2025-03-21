@@ -1,41 +1,102 @@
-# Scalable Qdrant Distributed Deployment
-
-This project is a demonstration of deploying Qdrant, a high-performance vector database, in a distributed manner. By leveraging Docker Compose, we set up a scalable architecture that consists of multiple Qdrant nodes, ensuring high availability and efficient load distribution for vector search operations.
+# Qdrant Multi-Node Cluster
 
 <p align="center">
-  <img src="https://dbdb.io/media/logos/qdrant.svg">
+  <img src="https://dbdb.io/media/logos/qdrant.svg" alt="Qdrant Logo" width="300">
 </p>
 
-## Key Features
+<p align="center">
+  <a href="https://github.com/Mohitkr95/qdrant-multi-node-cluster/actions"><img src="https://img.shields.io/github/actions/workflow/status/Mohitkr95/qdrant-multi-node-cluster/build.yml?branch=main&label=build" alt="Build Status"></a>
+  <a href="https://pypi.org/project/qdrant-demo/"><img src="https://img.shields.io/pypi/v/qdrant-demo" alt="PyPI Version"></a>
+  <a href="https://github.com/Mohitkr95/qdrant-multi-node-cluster/blob/main/LICENSE"><img src="https://img.shields.io/github/license/Mohitkr95/qdrant-multi-node-cluster" alt="License"></a>
+  <a href="https://github.com/Mohitkr95/qdrant-multi-node-cluster/releases"><img src="https://img.shields.io/github/v/release/Mohitkr95/qdrant-multi-node-cluster?include_prereleases" alt="GitHub Release"></a>
+  <a href="https://github.com/Mohitkr95/qdrant-multi-node-cluster/issues"><img src="https://img.shields.io/github/issues/Mohitkr95/qdrant-multi-node-cluster" alt="GitHub Issues"></a>
+  <a href="https://python.org"><img src="https://img.shields.io/badge/python-3.8+-blue.svg" alt="Python Version"></a>
+  <a href="https://github.com/Mohitkr95/qdrant-multi-node-cluster/stargazers"><img src="https://img.shields.io/github/stars/Mohitkr95/qdrant-multi-node-cluster" alt="GitHub Stars"></a>
+</p>
 
-- **Scalable Multi-Node Setup:** Deploys multiple instances of Qdrant, each running in its own Docker container, to form a robust, distributed vector database.
-- **Customizable Sharding and Replication:** Features advanced configuration options for sharding and replication, optimizing data distribution and search efficiency across nodes.
-- **Python Client for Database Operations:** Includes a Python script that demonstrates how to interact with the distributed Qdrant setup, performing operations such as creating collections, managing shard keys, and inserting vector data.
+<p align="center">
+  <b>Scalable vector database deployment for efficient similarity search across multiple nodes</b>
+</p>
 
-## Prerequisites
+---
 
-- Docker and Docker Compose must be installed on your system.
-- Python 3.8 or newer for executing the client script.
+## 📖 Overview
 
-## Deployment Configuration
+This project demonstrates a scalable, distributed deployment of [Qdrant](https://qdrant.tech/), a high-performance vector database. It showcases how to set up multiple Qdrant nodes in a clustered configuration, enabling efficient vector search operations with high availability and performance.
 
-### Number of Nodes
+Qdrant is designed for enterprise-grade vector similarity search, supporting a wide range of use cases:
 
-This setup is configured to deploy **4 Qdrant nodes**. Each node serves as a separate instance within the distributed database system, enhancing redundancy and query processing capabilities.
+- **Semantic text search**: Find documents with similar meaning, not just keywords
+- **Image similarity**: Locate visually similar images
+- **Recommendation systems**: Suggest products, content, or services
+- **Anomaly detection**: Identify outliers in vector spaces
+- **Chatbot knowledge base**: Power semantic retrieval for AI assistants
 
-### Configuring Nodes
+## ✨ Key Features
 
-The deployment of Qdrant nodes is managed through a `docker-compose.yml` file, which specifies the container setup, network configurations, and environment variables for each node. This file is crafted to ensure optimal performance and scalability of the database.
+- **🔄 Scalable Multi-Node Architecture**: Deploy 3+ Qdrant nodes that work as a unified cluster
+- **📊 Dynamic Sharding**: Distribute vector data across nodes with customizable sharding strategies
+- **🏠 High Availability**: Built-in replication for fault tolerance and continuous operation
+- **📈 Monitoring Stack**: Integrated Prometheus and Grafana for real-time metrics visualization
+- **🐍 Python Client Integration**: Comprehensive demo application showing cluster interaction
+- **🐳 Docker-Based Deployment**: Simple setup using Docker Compose
+- **🔧 Detailed Configuration**: Extensive options for tuning and optimizing performance
 
-### Features and Parameters
+## 🚀 Quick Start
 
-- **Sharding:** The database utilizes custom sharding to distribute data evenly across nodes, enhancing query performance and scalability. Sharding parameters can be adjusted based on dataset size and query load.
-- **Replication:** To ensure data availability and fault tolerance, replication can be configured across the nodes. This project sets the groundwork for such configurations, highlighting how Qdrant supports distributed data management.
-- **Resource Allocation:** Each node's resources (CPU and memory limits) can be customized in the `docker-compose.yml` file, allowing for tailored deployment based on the available infrastructure.
+### Prerequisites
 
-## Project Structure
+- Docker and Docker Compose
+- Python 3.8+
+- Git
 
-The project is organized as follows:
+### Installation
+
+```bash
+# Clone the repository
+git clone https://github.com/Mohitkr95/qdrant-multi-node-cluster.git
+cd qdrant-multi-node-cluster
+
+# Install the package and dependencies
+pip install -e .
+```
+
+### Deploy the Cluster
+
+```bash
+# Start the Qdrant cluster with Prometheus and Grafana
+cd deployments/docker
+docker-compose up -d
+```
+
+### Run the Demo
+
+```bash
+# Run the demonstration
+python src/run_demo.py
+
+# Or with custom parameters
+python src/run_demo.py --host localhost --port 6333 --points 2000
+```
+
+### Access Services
+
+- **Qdrant API**: [http://localhost:6333](http://localhost:6333)
+- **Prometheus**: [http://localhost:9090](http://localhost:9090)
+- **Grafana**: [http://localhost:3000](http://localhost:3000) (default login: admin/admin)
+
+## 📋 Documentation
+
+Comprehensive documentation is available in the [docs](./docs) directory:
+
+- [Getting Started Guide](./docs/guides/getting-started.md)
+- [Architecture Overview](./docs/guides/architecture.md)
+- [Configuration Guide](./docs/guides/configuration.md)
+- [API Reference](./docs/api/reference.md)
+- [Performance Tuning](./docs/guides/performance.md)
+- [Troubleshooting](./docs/guides/troubleshooting.md)
+
+## 🛠️ Project Structure
 
 ```
 qdrant-multi-node-cluster/
@@ -45,95 +106,109 @@ qdrant-multi-node-cluster/
 ├── deployments/               # Deployment files
 │   └── docker/                # Docker-related files
 │       └── docker-compose.yml # Docker Compose configuration
+├── docs/                      # Documentation
+│   ├── api/                   # API documentation
+│   ├── guides/                # User guides
+│   └── images/                # Documentation images
 ├── src/                       # Source code
 │   ├── qdrant_demo/           # Main package
 │   │   ├── config/            # Configuration settings
-│   │   │   ├── __init__.py
-│   │   │   └── settings.py    # Configuration parameters
 │   │   ├── core/              # Core functionality
-│   │   │   ├── __init__.py
-│   │   │   └── cluster_demo.py # Main demo class
-│   │   ├── utils/             # Utility functions
-│   │   │   ├── __init__.py
-│   │   │   └── data_generator.py # Data generation utilities
-│   │   └── __init__.py
+│   │   └── utils/             # Utility functions
 │   └── run_demo.py            # Main entry point
 ├── tests/                     # Test files
-├── LICENSE
-├── README.md
-├── requirements.txt
+├── LICENSE                    # MIT License
+├── Makefile                   # Development commands
+├── README.md                  # Project overview
+├── requirements.txt           # Python dependencies
 └── setup.py                   # Package setup file
 ```
 
-## Setup Instructions
+## 📊 Monitoring and Visualization
 
-### 1. Preparing the Deployment
+This project integrates Prometheus for metrics collection and Grafana for visualization, providing real-time insights into your Qdrant cluster's performance.
 
-Clone the repository and install the necessary dependencies:
+<p align="center">
+  <img src="./docs/images/grafana-dashboard.png" alt="Grafana Dashboard" width="800">
+</p>
 
-```bash
-git clone https://github.com/Mohitkr95/qdrant-multi-node-cluster.git
-cd qdrant-multi-node-cluster
-pip install -e .
+## 🔍 Advanced Configuration
+
+### Sharding Configuration
+
+Customize sharding to distribute data efficiently:
+
+```python
+# In settings.py
+SHARD_NUMBER = 4  # Default shard count
 ```
 
-### 2. Launching the Qdrant Nodes
+### Vector Parameters
 
-Initiate the deployment of the Qdrant nodes using Docker Compose:
+Configure vector dimensions and distance metrics:
 
-```bash
-cd deployments/docker
-docker-compose up -d
+```python
+# In cluster_demo.py
+client.create_collection(
+    collection_name=self.collection_name,
+    vectors_config=models.VectorParams(
+        size=self.vector_size,  # 768 by default 
+        distance=models.Distance.COSINE
+    ),
+    # ...other parameters
+)
 ```
 
-This command spins up the configured number of Qdrant nodes, setting up a distributed vector search environment.
+### Adding More Nodes
 
-## Running the Client Application
+Extend the cluster by adding more nodes in `docker-compose.yml`:
 
-To interact with the distributed Qdrant database, run the demo script:
-
-```bash
-# Run with default settings
-python src/run_demo.py
-
-# Run with custom settings
-python src/run_demo.py --host localhost --port 6333 --points 2000
+```yaml
+qdrant_node4:
+  image: qdrant/qdrant:v1.6.1
+  volumes:
+    - ./data/node4:/qdrant/storage
+  depends_on:
+    - qdrant_node1
+  environment:
+    QDRANT__CLUSTER__ENABLED: "true"
+  command: "./qdrant --bootstrap http://qdrant_node1:6335 --uri http://qdrant_node4:6335"
 ```
 
-## Monitoring and Visualization with Prometheus and Grafana
+## 🧪 Testing
 
-This project also integrates Prometheus for monitoring and Grafana for visualization, enhancing the observability of the distributed Qdrant deployment directly within the Docker Compose environment.
+Run the test suite:
 
-### Prometheus Configuration
+```bash
+# Run all tests
+make test
 
-Prometheus is configured to automatically scrape metrics from the Qdrant nodes. This is achieved by mounting a custom `prometheus.yml` configuration file into the Prometheus container, specifying the targets and metrics to collect.
+# Or directly with Python
+python -m unittest discover -s tests
+```
 
-To add Prometheus to your deployment:
+## 🤝 Contributing
 
-1. Prometheus is included as a service in the `docker-compose.yml` file. Ensure the `prometheus.yml` file is correctly configured to scrape metrics from your Qdrant nodes.
-2. Launch Prometheus along with your services using Docker Compose:
-   ```bash
-   docker-compose up -d prometheus
-   ```
-3. Access Prometheus UI by navigating to `http://localhost:9090`.
+Contributions are welcome! See our [Contributing Guide](./docs/guides/contributing.md) for details on how to get started.
 
-### Grafana Dashboard
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
 
-Grafana is set up to visualize the metrics collected by Prometheus. A volume is created for Grafana data persistence, and initial login credentials are configured through environment variables.
+## 📜 License
 
-To use the Grafana dashboard:
+This project is licensed under the MIT License - see the [LICENSE](./LICENSE) file for details.
 
-1. Grafana is included as a service in the `docker-compose.yml` file and depends on Prometheus being up and running.
-2. Start Grafana along with your services:
-   ```bash
-   docker-compose up -d grafana
-   ```
-3. Access the Grafana UI by navigating to `http://localhost:3000`. Login with the default credentials (admin/admin) or as specified in the `docker-compose.yml`.
-4. Connect Grafana to the Prometheus data source by specifying Prometheus's URL (`http://prometheus:9090`) in the data source settings.
-5. Import the `grafana.json` dashboard file to visualize the Qdrant metrics.
+## 👏 Acknowledgments
 
-This setup enables you to monitor the health and performance of your Qdrant deployment seamlessly, utilizing Docker Compose for an integrated monitoring and visualization solution.
+- [Qdrant](https://qdrant.tech/) for the excellent vector database
+- [Prometheus](https://prometheus.io/) and [Grafana](https://grafana.com/) for monitoring capabilities
+- All [contributors](https://github.com/Mohitkr95/qdrant-multi-node-cluster/graphs/contributors) who help improve this project
 
-## License
+## 📧 Contact
 
-This project is licensed under the MIT License. See the LICENSE file for full details.
+Mohit Kumar - [@Mohitkr95](https://github.com/Mohitkr95)
+
+Project Link: [https://github.com/Mohitkr95/qdrant-multi-node-cluster](https://github.com/Mohitkr95/qdrant-multi-node-cluster)
