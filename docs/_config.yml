@@ -1,0 +1,5 @@
+title: Qdrant Multi-Node Cluster
+description: Scalable Qdrant vector database cluster with Docker Compose, monitoring, and comprehensive documentation
+theme: jekyll-theme-cayman
+github:
+  is_project_page: false 
