@@ -1,5 +1,3 @@
-# Qdrant Multi-Node Cluster
-
 <p align="center">
   <img src="https://dbdb.io/media/logos/qdrant.svg" alt="Qdrant Logo" width="300">
 </p>

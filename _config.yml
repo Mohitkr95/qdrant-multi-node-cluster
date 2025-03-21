@@ -1,24 +1,5 @@
-title: ""
-description: ""
+title: Qdrant Multi-Node Cluster
+description: Scalable Qdrant vector database cluster with Docker Compose, monitoring, and comprehensive documentation
 theme: jekyll-theme-cayman
 github:
-  is_project_page: false
-  
-# Custom CSS to reduce header width
-header_pages:
- - none
-
-# Add custom CSS
-sass:
-  style: compressed
-
-kramdown:
-  syntax_highlighter_opts:
-    disable: true
-    
-# Add custom styles
-google_analytics:
-plugins:
-  - jekyll-seo-tag
-
-# Custom CSS in assets/css/style.scss 
+  is_project_page: false 
