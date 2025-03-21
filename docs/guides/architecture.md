@@ -6,9 +6,57 @@ This document outlines the architecture of the Qdrant Multi-Node Cluster setup, 
 
 The system consists of the following primary components:
 
-<p align="center">
-  <img src="../images/architecture-diagram.png" alt="Architecture Diagram" width="800">
-</p>
+```mermaid
+graph TD
+    subgraph "User Applications"
+        Client[Python Client Application]
+    end
+    
+    subgraph "Qdrant Cluster"
+        Bootstrap[Bootstrap Node<br>qdrant_node1]
+        Node2[Peer Node<br>qdrant_node2]
+        Node3[Peer Node<br>qdrant_node3]
+
+        Bootstrap <--> Node2
+        Bootstrap <--> Node3
+        Node2 <--> Node3
+    end
+    
+    subgraph "Monitoring Stack"
+        Prometheus[Prometheus<br>Metrics Collection]
+        Grafana[Grafana<br>Visualization Dashboard]
+        
+        Prometheus --> Grafana
+    end
+    
+    Client --> Bootstrap
+    Client --> Node2
+    Client --> Node3
+    
+    Prometheus --> Bootstrap
+    Prometheus --> Node2
+    Prometheus --> Node3
+    
+    subgraph "Storage Layer"
+        Store1[(Bootstrap Storage)]
+        Store2[(Node2 Storage)]
+        Store3[(Node3 Storage)]
+    end
+    
+    Bootstrap --> Store1
+    Node2 --> Store2
+    Node3 --> Store3
+    
+    classDef client fill:#f9f,stroke:#333,stroke-width:2px;
+    classDef nodes fill:#bbf,stroke:#333,stroke-width:1px;
+    classDef monitoring fill:#bfb,stroke:#333,stroke-width:1px;
+    classDef storage fill:#ffc,stroke:#333,stroke-width:1px;
+    
+    class Client client;
+    class Bootstrap,Node2,Node3 nodes;
+    class Prometheus,Grafana monitoring;
+    class Store1,Store2,Store3 storage;
+```
 
 1. **Qdrant Cluster**: Multiple Qdrant nodes working together
 2. **Client Application**: Python application to interact with the cluster
@@ -50,6 +98,21 @@ The cluster distributes data using these mechanisms:
 
 When vectors are added to the collection:
 
+```mermaid
+sequenceDiagram
+    participant Client
+    participant CoordinatorNode as Coordinator Node
+    participant PrimaryShards as Primary Shards
+    participant ReplicaShards as Replica Shards
+    
+    Client->>CoordinatorNode: Upload Vector Data
+    Note over CoordinatorNode: Determine shard placement<br>based on vector ID or metadata
+    CoordinatorNode->>PrimaryShards: Write to primary shards
+    PrimaryShards->>ReplicaShards: Replicate data
+    PrimaryShards-->>CoordinatorNode: Acknowledge write
+    CoordinatorNode-->>Client: Success response
+```
+
 1. Client sends vector data to any node in the cluster
 2. The node determines the appropriate shard based on vector ID or metadata
 3. Data is written to the primary shard
@@ -58,6 +121,22 @@ When vectors are added to the collection:
 ### Read Operations (Vector Search)
 
 When a search query is executed:
+
+```mermaid
+sequenceDiagram
+    participant Client
+    participant CoordinatorNode as Coordinator Node
+    participant Shards as All Shards
+    
+    Client->>CoordinatorNode: Vector Search Query
+    Note over CoordinatorNode: Parse query parameters
+    par Query distribution
+        CoordinatorNode->>Shards: Distribute query to all shards
+        Shards-->>CoordinatorNode: Return local results
+    end
+    Note over CoordinatorNode: Merge & sort results<br>based on similarity scores
+    CoordinatorNode-->>Client: Return final results
+```
 
 1. Client sends a search request to any node
 2. The coordinator node distributes the query to all shards
