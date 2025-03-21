@@ -7,6 +7,12 @@ on:
     branches: [ main ]
   workflow_dispatch:
 
+# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -38,4 +44,5 @@ jobs:
       uses: JamesIves/github-pages-deploy-action@v4
       with:
         folder: docs
-        branch: gh-pages 
+        branch: gh-pages
+        token: ${{ secrets.GITHUB_TOKEN }} 
