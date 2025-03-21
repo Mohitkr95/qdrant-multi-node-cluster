@@ -6,57 +6,9 @@ This document outlines the architecture of the Qdrant Multi-Node Cluster setup, 
 
 The system consists of the following primary components:
 
-```mermaid
-graph TD
-    subgraph "User Applications"
-        Client[Python Client Application]
-    end
-    
-    subgraph "Qdrant Cluster"
-        Bootstrap[Bootstrap Node<br>qdrant_node1]
-        Node2[Peer Node<br>qdrant_node2]
-        Node3[Peer Node<br>qdrant_node3]
-
-        Bootstrap <--> Node2
-        Bootstrap <--> Node3
-        Node2 <--> Node3
-    end
-    
-    subgraph "Monitoring Stack"
-        Prometheus[Prometheus<br>Metrics Collection]
-        Grafana[Grafana<br>Visualization Dashboard]
-        
-        Prometheus --> Grafana
-    end
-    
-    Client --> Bootstrap
-    Client --> Node2
-    Client --> Node3
-    
-    Prometheus --> Bootstrap
-    Prometheus --> Node2
-    Prometheus --> Node3
-    
-    subgraph "Storage Layer"
-        Store1[(Bootstrap Storage)]
-        Store2[(Node2 Storage)]
-        Store3[(Node3 Storage)]
-    end
-    
-    Bootstrap --> Store1
-    Node2 --> Store2
-    Node3 --> Store3
-    
-    classDef client fill:#f9f,stroke:#333,stroke-width:2px;
-    classDef nodes fill:#bbf,stroke:#333,stroke-width:1px;
-    classDef monitoring fill:#bfb,stroke:#333,stroke-width:1px;
-    classDef storage fill:#ffc,stroke:#333,stroke-width:1px;
-    
-    class Client client;
-    class Bootstrap,Node2,Node3 nodes;
-    class Prometheus,Grafana monitoring;
-    class Store1,Store2,Store3 storage;
-```
+<p align="center">
+  <img src="../images/architecture.png" alt="Architecture Diagram" width="800">
+</p>
 
 1. **Qdrant Cluster**: Multiple Qdrant nodes working together
 2. **Client Application**: Python application to interact with the cluster
