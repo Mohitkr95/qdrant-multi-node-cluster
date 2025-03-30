@@ -13,7 +13,7 @@ services:
       QDRANT__LOG_LEVEL: "INFO"
     command: "./qdrant --uri http://qdrant_node1:6335"
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:6333/readiness"]
+      test: ["CMD", "curl", "-f", "http://localhost:6333/healthz"]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -30,7 +30,7 @@ services:
       QDRANT__LOG_LEVEL: "INFO"
     command: "./qdrant --bootstrap http://qdrant_node1:6335 --uri http://qdrant_node2:6335"
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:6333/readiness"]
+      test: ["CMD", "curl", "-f", "http://localhost:6333/healthz"]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -47,7 +47,7 @@ services:
       QDRANT__LOG_LEVEL: "INFO"
     command: "./qdrant --bootstrap http://qdrant_node1:6335 --uri http://qdrant_node3:6335"
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:6333/readiness"]
+      test: ["CMD", "curl", "-f", "http://localhost:6333/healthz"]
       interval: 10s
       timeout: 5s
       retries: 5
